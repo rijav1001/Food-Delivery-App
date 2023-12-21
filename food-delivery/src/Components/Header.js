@@ -4,7 +4,7 @@ import { BarChart, SearchRounded, ShoppingCartRounded } from '@mui/icons-materia
 function Header() {
   return (
     <header>
-        <img src='app-logo.jpg' alt='' className='logo' /> 
+        <img src={'/images/app-logo.jpg'} alt='' className='logo' /> 
 
         <div className='inputBox'>
             <SearchRounded />
@@ -20,7 +20,7 @@ function Header() {
 
         <div className='profileContainer'>
             <div className='imgBox'>
-                <img src='profile-pic.jpg' alt='' className='profilePic' />
+                <img src={'/images/profile-pic.jpg'} alt='' className='profilePic' />
             </div>
 
             <h2 className='userName'>Rijav</h2>
