@@ -1,5 +1,5 @@
 import React from 'react'
-import { BarChart, SearchRounded, ShoppingCartRounded } from '@mui/icons-material'
+import { MenuOutlined, SearchRounded, ShoppingCartRounded } from '@mui/icons-material'
 
 function Header() {
   return (
@@ -27,7 +27,7 @@ function Header() {
         </div>
             
         <div className='toggleMenu'>
-            <BarChart className='toggleIcon' />
+            <MenuOutlined className='toggleIcon' />
         </div>
     </header>
   )
