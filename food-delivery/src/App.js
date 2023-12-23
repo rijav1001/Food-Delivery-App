@@ -2,13 +2,21 @@ import { AccountBalanceWalletRounded, Chat, Favorite, HomeRounded, Settings, Sum
 import './App.css';
 import Header from './Components/Header';
 import MenuContainer from './Components/MenuContainer';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import BannerName from './Components/BannerName';
 import SubMenuContainer from './Components/SubMenuContainer';
 import MenuCard from './Components/MenuCard';
 import { MenuItems, Items } from './Components/Data'
+import ItemCard from './Components/ItemCard';
+import DebitCard from './Components/DebitCard';
+import CartItem from './Components/CartItem';
 
 function App() {
+
+  // Main dish state
+  const [isMainData, setMainData] = useState(
+    Items.filter(ele => ele.itemId === 'burger01')
+  )
 
   useEffect(() => {
     const menuLi = document.querySelectorAll('#menu li')
@@ -31,7 +39,12 @@ function App() {
     }
 
     menuCard.forEach(i => i.addEventListener('click', setMenuCardActive))
-  }, [])
+  }, [isMainData])
+
+  // set main dish items on filter
+  const setData = (itemId) => {
+    setMainData(Items.filter(ele => ele.itemId === itemId))
+  }
 
   return (
     <div className="App">
@@ -53,15 +66,52 @@ function App() {
               </div>
               <div className='rowContainer'>
                 {MenuItems && MenuItems.map((data) => (
-                  <div key={data.id}>
-                    <MenuCard imgSrc={data.imgSrc} name={data.name} isActive = {data.id === 1 ? true : false} />
+                  <div key={data.id} onClick={() => setData(data.itemId)}>
+                    <MenuCard imgSrc={data.imgSrc} name={data.name} isActive={data.id === 1 ? true : false} />
                   </div>
                 ))}
               </div>
-              <div className='dishItemContainer'></div>
+
+              <div className='dishItemContainer'>
+                {isMainData && isMainData.map((data) => (
+                    <ItemCard 
+                    key={data.id}
+                    itemId={data.itemId}
+                    imgSrc={data.imgSrc} name={data.name} ratings={data.ratings} 
+                    price={data.price} />
+                  ))}
+              </div>
             </div>
         </div>
-        <div className='rightMenu'></div>
+        <div className='rightMenu'>
+          <div className='debitCardContainer'>
+            <div className='debitCard'>
+              <DebitCard />
+            </div>
+          </div>
+
+          <div className='cartCheckoutContainer'>
+            <SubMenuContainer name={'Cart Items'} />
+            <div className='cartContainer'>
+              <div className='cartItems'>
+                <CartItem 
+                  name={'Burger Bistro'}
+                  imgSrc={'/images/burger-food.jpg'}
+                  price={'149/-'}
+                />
+              </div>
+            </div>
+
+            <div className='totalSection'>
+              <h3>Total</h3>
+              <p>
+                <span>₹ </span>480/-
+              </p>
+            </div>
+
+            <button className='checkout'>Check Out</button>
+          </div>
+        </div>
       </main>
 
       {/* Bottom menu */}
