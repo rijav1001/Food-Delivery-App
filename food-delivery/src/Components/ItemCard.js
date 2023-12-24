@@ -1,18 +1,27 @@
 import { AddRounded, Favorite, StarRounded } from '@mui/icons-material'
 import React, { useEffect, useState } from 'react'
 import { Items } from './Data'
+import { useStateValue } from './StateProvider'
+import { actionType } from './reducer'
+
+let cartData = []
 
 function ItemCard({ imgSrc, name, ratings, price, itemId }) {
 
     const [isFavorite, setFavorite] = useState(false)
     const [currVal, setCurrVal] = useState(Math.floor(ratings))
-    // const [isCart, setCart] = useState(null)
+    const [cart, setCart] = useState(null)
+    const [{}, dispatch] = useStateValue()
 
-    // useEffect(() => {
-    //     if(isCart) {
-    //         console.log(isCart)
-    //     }
-    // }, [isCart])
+    useEffect(() => {
+        if(cart) {
+            cartData.push(cart)
+            dispatch({
+                type: actionType.SET_CART,
+                cart: cartData
+            })
+        }
+    }, [cart])
 
     const handleClick = (val) => {
         setCurrVal(val)
@@ -40,7 +49,11 @@ function ItemCard({ imgSrc, name, ratings, price, itemId }) {
                     ))}
                     <h3 className='price'><span>₹ {price}</span></h3>
                 </div>
-                <i className='addToCart' onClick={() => setCart(Items.find(i => i.id === itemId))}>
+                <i 
+                    className='addToCart' onClick={() => {
+                        setCart(Items.find((i) => i.id === itemId))
+                    }}
+                >
                     <AddRounded />
                 </i>
             </div>

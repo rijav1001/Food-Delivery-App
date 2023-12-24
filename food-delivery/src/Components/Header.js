@@ -4,9 +4,10 @@ import { MenuOutlined, SearchRounded, ShoppingCartRounded } from '@mui/icons-mat
 function Header() {
 
     useEffect(() => {
-        const toggleMenu = document.querySelector('.toggleMenu')
+        const toggle = document.querySelector('.toggleMenu')
 
-        toggleMenu.addEventListener('click', () => {
+        toggle.addEventListener('click', () => {
+            // console.log(toggle)
             document.querySelector('.rightMenu').classList.toggle('active')
         })
     }, [])
